@@ -10,108 +10,21 @@
 	<link rel="stylesheet" href="css/L.Control.Sidebar.css" />
 </head>
 <body>
-	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-	<script src="js/cuevas.js"></script>
+	<script src="js/leaflet-src.js"></script>
+	<script src="data/cuevas.js"></script>
 	<script src="js/leaflet.markercluster.js"></script>
 	<script src="js/L.Control.Sidebar.js"></script>
 	<script src="js/L.Control.Button.js"></script>
 	<div id ="map">
-	<div id="sidebar"></div>
 	<button id="helpbutton" role="button" class="botoninfo"><img src="img/info.png" width="23" height="23"></button>
+	<div id="sidebar"></div>
 	<div id="infosidebar">
     <h1><b>Espeleografías</b></h1>
 		<p>Espeleografías se planteó como un primer y necesario paso para visibilizar un conjunto arquitectónico identitario del centro histórico de Villena como es el de las casas-cueva. La finalidad del taller, desarrollado a lo largo de los tres primeros días de elCASC 2016, era la de identificar y describir en la medida de lo posible un patrimonio desconocido por buena parte de la ciudadanía de Villena y documentado hasta ahora demanera insuficiente.<br><br></p><iframe width="400" height="225" src="https://www.youtube.com/embed/-fF4XpOJBGE" frameborder="0" allowfullscreen></iframe><h5><a href="http://twitter.com/equipoliquen">liquen</a> x <a href="http://milenavillalba.com">Milena Villalba</a><br><br><br><a href="http://elcasc.com"><img src="img/logo-casc.png" width="225" height="50"></a><br><br><p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es_ES"><em>Algunos derechos reservados</em></a></p>
 	</div>
-	<script type="text/javascript">
-	
-		// Mapas base
-				
-		var map = L.map('map', {center: [38.631817, -0.860312], zoom: 17});
-		
-		var ortofoto = L.tileLayer('https://api.mapbox.com/styles/v1/santihpuig/cki640m4i1d2k19piouwlxrsj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FudGlocHVpZyIsImEiOiJrYkhOMDVnIn0.ak6qwXtkOps01I5G-LCS_A', {			
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org"> OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</			a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-			detectRetina: true,
-			minZoom: 17,
-			maxZoom: 20,
-			opacity: 0.75
-     		}).addTo(map);	
-
-		var vectorial = L.tileLayer('https://api.mapbox.com/styles/v1/santihpuig/cj8op69ix8wx02rnrf366r4qo/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FudGlocHVpZyIsImEiOiJrYkhOMDVnIn0.ak6qwXtkOps01I5G-LCS_A', {	
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org"> OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</			a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>',	
-			detectRetina: true,
-			minZoom: 17,
-			maxZoom: 20,
-     		});   		
-     	
-     		      		
-	   	// Markers de cuevas
-	
-	   	var popupCuevas = function (feature, marker){
-			marker.bindPopup("<b>Tipología</b><br><br> "+feature.properties.tipologia+
-			"<br><br><b>Estado de conservación</b><br><br>"+feature.properties.conserva+
-			"<br><br><b>Observaciones</b><br><br>"+feature.properties.observa+
-			"<br><br>"+feature.properties.embed1)			
-	   		};
-	   		
-	   	function estiloCuevas(feature, layer) {
-                return {
-                    radius: 5,
-                    fillColor: "#cea256",
-                    color: "#cea256",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.7
-                    };
-                 };
-
-		var cuevas = L.geoJson(cuevas, {
-			pointToLayer: function (feature, latlng) {
-				return L.circleMarker (latlng, estiloCuevas);
-			}, 
-			style: estiloCuevas,
-			onEachFeature: popupCuevas
-		}).addTo(map);
-
-	   	
-	   	var markersCluster = L.markerClusterGroup({
-		   	maxClusterRadius: 25,
-		   	showCoverageOnHover: false,
-		    zoomToBoundsOnClick: true,
-     	});
-	   	
-	   	markersCluster.addLayer(cuevas);
-	   	map.addLayer(markersCluster);	
-     	
-     	
-     	// Sidebar + boton
-		
-		var sidebar = L.control.sidebar('infosidebar', { position: 'left' });
-		sidebar.addTo(map);
-
-		
-		var helpButton = new L.Control.Button(L.DomUtil.get('helpbutton'), { toggleButton: 'active' });
-
-		helpButton.addTo(map);
-
-		helpButton.on('click', function () {
-		    if (helpButton.isToggled()) {
-		        sidebar.hide();
-		    } else {
-		        sidebar.show();
-		    }
-		});		
-		     		
-
-     	// Selector de capa base
-     		
-		var baseLayers = {
-			"Ortofoto": ortofoto,
-			"Simple": vectorial			
-			};
-
-		L.control.layers(baseLayers, null, {collapsed: false, position: 'bottomright'}).addTo(map);
-	
-    		
-	</script>
+	<script src="js/mapa.js"></script>
+	<script src="js/puntos.js"></script>
+	<script src="js/sidebar.js"></script>
+	</div>
 </body>
 </html>
